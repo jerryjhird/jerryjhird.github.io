@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  @apply bg-gray-900 text-gray-100 font-mono p-8 transition-colors duration-500;
+}
+
+header {
+  @apply text-center mb-12;
+}
+
+header h1 {
+  @apply text-5xl font-bold mb-2;
+}
+
+header p {
+  @apply text-gray-400 text-lg;
+}
+
+section h2 {
+  @apply text-3xl font-semibold mb-4 border-b border-gray-700 pb-2;
+}
+
+section p {
+  @apply text-gray-300 leading-relaxed;
+}
+
+section {
+  @apply transition-all duration-700 ease-out;
+}
+
+li {
+  @apply transition-transform duration-300 ease-in-out;
+}
+
+a {
+  @apply transition-colors duration-300 ease-in-out;
+}
+
+ul li {
+  @apply bg-gray-800 p-4 rounded-lg shadow hover:shadow-xl transition-shadow;
+}
+
+a {
+  @apply text-green-400 hover:text-green-500 underline;
+}
+
