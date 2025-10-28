@@ -3,56 +3,48 @@
 @tailwind utilities;
 
 body {
+  @apply font-mono text-gray-100 p-8 transition-colors duration-700;
   background: linear-gradient(270deg, #1e1b2c, #554379, #7c54a5);
   background-size: 400% 400%;
   animation: gradientShift 20s ease infinite;
-  @apply font-mono text-gray-100 p-8 transition-colors duration-700;
 }
 
+/* background gradient */
 @keyframes gradientShift {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
 
+/* header */
 header {
   @apply text-center mb-12 relative z-10;
 }
 
 header h1 {
+  @apply font-extrabold;
   font-size: 4rem;
-  font-weight: 800;
   background: linear-gradient(to right, #ff6ec7, #c08fff, #7f5af0);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: textGlow 3s ease-in-out infinite alternate;
 }
 
-@keyframes textGlow {
-  0% { text-shadow: 0 0 3px #ff98ff, 0 0 6px #c08fff, 0 0 12px #7f5af0; }
-  100% { text-shadow: 0 0 5px #ff98ff, 0 0 10px #c08fff, 0 0 20px #7f5af0; }
-}
-
 header p {
   @apply text-gray-200 text-lg opacity-90;
 }
 
+/* sections */
 section {
-  @apply transition-all duration-700 ease-out relative z-10 max-w-3xl mx-auto mb-12;
+  @apply relative z-10 max-w-3xl mx-auto mb-12 transition-all duration-700 ease-out;
 }
 
-section.opacity-0 {
-  @apply opacity-0 translate-y-6;
-}
-
-section.opacity-100 {
-  @apply opacity-100 translate-y-0;
-}
+section.opacity-0 { @apply opacity-0 translate-y-6; }
+section.opacity-100 { @apply opacity-100 translate-y-0; }
 
 section h2 {
-  @apply text-3xl font-semibold mb-4 pb-2;
+  @apply text-3xl font-semibold mb-4 pb-2 text-center;
   border-bottom: 2px solid #c08fff;
-  text-align: center;
   animation: textGlow 3s ease-in-out infinite alternate;
 }
 
@@ -61,8 +53,8 @@ section p {
 }
 
 ul li {
-  z-index: 1;
   @apply p-4 rounded-xl transform transition-all duration-500 ease-in-out;
+  z-index: 1;
   background: linear-gradient(135deg, rgba(192,143,255,0.1), rgba(255,110,199,0.1));
 }
 
@@ -70,22 +62,23 @@ ul li:hover {
   @apply scale-105;
 }
 
-a {
-  @apply underline font-semibold;
+ul li a {
+  @apply inline-block mt-1 underline font-semibold;
   color: #ff6ec7;
   text-shadow: 0 0 4px #ff6ec7, 0 0 8px #c08fff, 0 0 12px #7f5af0;
   transition: all 0.3s ease-in-out;
 }
 
-a:hover {
+ul li a:hover {
   color: #ff8bff;
   text-shadow: 0 0 8px #ff8bff, 0 0 16px #c08fff, 0 0 24px #7f5af0;
   @apply animate-pulse;
 }
 
-ul li a {
-  display: inline-block;
-  margin-top: 2px;
+
+@keyframes textGlow {
+  0% { text-shadow: 0 0 3px #ff98ff, 0 0 6px #c08fff, 0 0 12px #7f5af0; }
+  100% { text-shadow: 0 0 5px #ff98ff, 0 0 10px #c08fff, 0 0 20px #7f5af0; }
 }
 
 body::before {
@@ -102,16 +95,4 @@ body::before {
 @keyframes sparkleMove {
   0% { background-position: 0 0; }
   100% { background-position: 200px 200px; }
-}
-
-.cursor-glow {
-  position: fixed;
-  width: 80px; height: 80px;
-  pointer-events: none;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,94,212,0.25) 0%, transparent 60%);
-  transform: translate(-50%, -50%);
-  z-index: 10;
-  mix-blend-mode: screen;
-  transition: transform 0.05s ease-out;
 }
