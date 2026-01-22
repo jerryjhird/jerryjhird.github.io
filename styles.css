@@ -125,3 +125,26 @@ body::before {
     transform: translateY(110vh) rotate(var(--rot));
   }
 }
+
+/* Basket */
+.basket {
+  position: fixed;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 3rem; /* bigger emoji */
+  z-index: 1000;
+  text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff1493;
+  pointer-events: none;
+}
+
+.counter {
+  position: fixed;
+  top: 1rem;
+  left: 1rem;
+  font-size: 2rem;
+  font-weight: bold;
+  color: #ff69b4;
+  text-shadow: 0 0 10px #ff69b4, 0 0 20px #ff1493;
+  z-index: 1000;
+}

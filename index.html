@@ -54,21 +54,23 @@
       <li>Matrix: <a>@jerryjhird:matrix.org</a></li>
       <li>Mastodon: <a href="https://mastodon.social/@jerryjhird" target="_blank" >@jerryjhird:mastodon.social</a></li>
       <li>GitHub: <a href="https://github.com/jerryjhird" target="_blank" >github.com/jerryjhird</a></li>
-      <li>GitHub(but better): <a href="https://git.disroot.org/jerryjhird" target="_blank" >git.disroot.org/jerryjhird</a></li>
+      <li>GitHub(but better): <a href="https://codeberg.org/jerryjhird" target="_blank" >git.disroot.org/jerryjhird</a></li>
       <li>Steam: <a href="https://steamcommunity.com/id/Jerryslang/" target="_blank" >@Jerryslang</a></li>
     </ul>
   </section>
 </body>
 
 <div class="uwuface-bg"></div>
+<div id="basket" class="basket">🗑️</div>
+<div id="counter" class="counter">0</div>
 
 <script>
+window.onload = () => {
   const container = document.querySelector(".uwuface-bg");
 
   function spawnuwuface() {
     const el = document.createElement("div");
     el.className = "uwuface-face";
-
     el.textContent = Math.random() < 0.5 ? ":3" : "uwu";
 
     el.style.left = Math.random() * 100 + "vw";
@@ -82,6 +84,75 @@
   }
 
   setInterval(spawnuwuface, 400);
+
+  const basket = document.getElementById("basket");
+  document.addEventListener("mousemove", (e) => {
+    const mouseX = e.clientX;
+    basket.style.left = mouseX - basket.offsetWidth / 2 + "px";
+  });
+
+  const counterEl = document.getElementById("counter");
+  let weebbux = parseInt(localStorage.getItem("weebbux")) || 0;
+  counterEl.textContent = weebbux;
+  const weebbuxObj = { value: weebbux }; // for pass-by-reference
+
+  async function showCatgirl() {
+    try {
+      const response = await fetch(
+        "https://api.nekosia.cat/api/v1/images/catgirl?count=1&session=ip"
+      );
+      const data = await response.json();
+      if (data.success && data.count > 0) {
+        const imageUrl = data.image.original.url;
+
+        const img = document.createElement("img");
+        img.src = imageUrl;
+        img.style.position = "fixed";
+        img.style.top = "50%";
+        img.style.left = "50%";
+        img.style.transform = "translate(-50%, -50%)";
+        img.style.maxWidth = "40vw";
+        img.style.maxHeight = "80vh";
+        img.style.borderRadius = "1rem";
+        img.style.boxShadow = "0 0 20px #ff69b4";
+        img.style.zIndex = "2000";
+        img.style.cursor = "pointer";
+        img.alt = "Catgirl UwU";
+
+        img.addEventListener("click", () => img.remove());
+        document.body.appendChild(img);
+      }
+    } catch (e) {
+      console.error("Failed to fetch catgirl image:", e);
+    }
+  }
+
+  function checkCollision() {
+    const faces = document.querySelectorAll(".uwuface-face");
+    faces.forEach(face => {
+      const faceRect = face.getBoundingClientRect();
+      const basketRect = basket.getBoundingClientRect();
+
+      if (
+        faceRect.bottom >= basketRect.top &&
+        faceRect.left < basketRect.right &&
+        faceRect.right > basketRect.left
+      ) {
+        weebbuxObj.value += 1;
+        localStorage.setItem("weebbux", weebbuxObj.value);
+        counterEl.textContent = weebbuxObj.value;
+        face.remove();
+
+        // show catgirl every 100 weebbux
+        if (weebbuxObj.value % 100 === 0) {
+          showCatgirl();
+        }
+      }
+    });
+  }
+
+  setInterval(checkCollision, 50);
+};
 </script>
 
 </html>
