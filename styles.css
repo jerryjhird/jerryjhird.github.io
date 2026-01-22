@@ -96,3 +96,32 @@ body::before {
   0% { background-position: 0 0; }
   100% { background-position: 200px 200px; }
 }
+
+.uwuface-bg {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  z-index: -1;
+  pointer-events: none;
+}
+
+.uwuface-face {
+  position: absolute;
+  top: -10%;
+  color: #ff9fd6;
+  font-family: monospace;
+  font-size: 2rem;
+  opacity: 0.3;
+  animation: fall linear infinite;
+  filter: drop-shadow(0 0 2px rgba(255, 182, 230, 0.5));
+  transform: rotate(var(--rot));
+}
+
+@keyframes fall {
+  from {
+    transform: translateY(-10vh) rotate(var(--rot));
+  }
+  to {
+    transform: translateY(110vh) rotate(var(--rot));
+  }
+}

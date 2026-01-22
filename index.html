@@ -59,4 +59,29 @@
     </ul>
   </section>
 </body>
+
+<div class="uwuface-bg"></div>
+
+<script>
+  const container = document.querySelector(".uwuface-bg");
+
+  function spawnuwuface() {
+    const el = document.createElement("div");
+    el.className = "uwuface-face";
+
+    el.textContent = Math.random() < 0.5 ? ":3" : "uwu";
+
+    el.style.left = Math.random() * 100 + "vw";
+    el.style.fontSize = 1.5 + Math.random() * 2 + "rem";
+    el.style.animationDuration = 6 + Math.random() * 6 + "s";
+    el.style.setProperty("--rot", `${Math.random() * 40 - 20}deg`);
+
+    container.appendChild(el);
+
+    setTimeout(() => el.remove(), 15000);
+  }
+
+  setInterval(spawnuwuface, 400);
+</script>
+
 </html>
