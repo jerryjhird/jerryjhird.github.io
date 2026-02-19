@@ -8,7 +8,7 @@
   <script>
     tailwind.config = { darkMode: 'class' }
   </script>
-  <link rel="stylesheet" href="styles.css">
+  <script src="theme-loader.js"></script>
 </head>
 <body class="bg-gray-900 text-gray-100 font-mono p-8 transition-colors duration-500">
 
@@ -20,139 +20,46 @@
   <section class="max-w-3xl mx-auto mb-12">
     <h2 class="text-3xl font-semibold mb-4 border-b border-gray-700 pb-2">About Me</h2>
     <p class="text-gray-300 leading-relaxed">
-      I am a primarily low-level software developer that mainly programs in C. i know my way around (development wise) git, several build systems, x86-64, Limine, UEFI, osdev, hardware emulation, cryptography, brainfuck, software rendering and languages that include but are not limited to: C, python, html, css, rust, nim, assembly(at&t syntax and intel syntax)  
+      I am a primarily low-level software developer that mainly programs in C  
     </p>
   </section>
 
   <section class="max-w-3xl mx-auto mb-12">
-    <h2 class="text-3xl font-semibold mb-4 border-b border-gray-700 pb-2">Languages</h2>
+    <h2 class="text-3xl font-semibold mb-4 border-b border-gray-700 pb-2">Projects</h2>
     <ul class="grid grid-cols-2 md:grid-cols-3 gap-4">
-      <li class="bg-gray-800 p-4 rounded-lg shadow hover:shadow-xl transition-shadow">C</li>
-      <li class="bg-gray-800 p-4 rounded-lg shadow hover:shadow-xl transition-shadow">Rust</li>
-      <li class="bg-gray-800 p-4 rounded-lg shadow hover:shadow-xl transition-shadow">Python</li>
-      <li class="bg-gray-800 p-4 rounded-lg shadow hover:shadow-xl transition-shadow">JavaScript</li>
-      <li class="bg-gray-800 p-4 rounded-lg shadow hover:shadow-xl transition-shadow">Nim</li>
-      <li class="bg-gray-800 p-4 rounded-lg shadow hover:shadow-xl transition-shadow">Bash</li>
+      <li class="bg-gray-800 p-4 rounded-lg shadow hover:shadow-xl transition-shadow">Mediacntrl</li>
+      <li class="bg-gray-800 p-4 rounded-lg shadow hover:shadow-xl transition-shadow">CuoreOS</li>
+      <li class="bg-gray-800 p-4 rounded-lg shadow hover:shadow-xl transition-shadow">CHIPPIE-8</li>
+      <li class="bg-gray-800 p-4 rounded-lg shadow hover:shadow-xl transition-shadow">xbpackageview</li>
+      <li class="bg-gray-800 p-4 rounded-lg shadow hover:shadow-xl transition-shadow">rfetch</li>
     </ul>
   </section>
 
   <section class="max-w-3xl mx-auto mb-12">
     <h2 class="text-3xl font-semibold mb-4 border-b border-gray-700 pb-2">Contributed To</h2>
     <ul class="grid grid-cols-2 md:grid-cols-3 gap-4">
-      <li class="bg-gray-800 p-4 rounded-lg shadow hover:shadow-xl transition-shadow">SqlMap</li>
-      <li class="bg-gray-800 p-4 rounded-lg shadow hover:shadow-xl transition-shadow">OpenfrontIO</li>
-      <li class="bg-gray-800 p-4 rounded-lg shadow hover:shadow-xl transition-shadow">SynthLauncher</li>
+      <li class="bg-gray-800 p-4 rounded-lg shadow hover:shadow-xl transition-shadow">sqlmap</li>
+      <li class="bg-gray-800 p-4 rounded-lg shadow hover:shadow-xl transition-shadow">OpenFrontIO</li>
+      <li class="bg-gray-800 p-4 rounded-lg shadow hover:shadow-xl transition-shadow">Mellurboo/Livefs</li>
       <li class="bg-gray-800 p-4 rounded-lg shadow hover:shadow-xl transition-shadow">Discord-ferris</li>
     </ul>
   </section>
 
   <section class="max-w-3xl mx-auto">
     <h2 class="text-3xl font-semibold mb-4 border-b border-gray-700 pb-2">Contact</h2>
-    <p class="text-gray-300 mb-4">Feel free to reach out or check out my projects via:</p>
+    <p class="text-gray-300 mb-4">feel free to reach out or check out my projects via:</p>
     <ul class="space-y-2">
       <li>Email: <a href="mailto:jerryjhird-public@proton.me">jerryjhird-public@proton.me</a></li>
       <li>Matrix: <a>@jerryjhird:matrix.org</a></li>
-      <li>Mastodon: <a href="https://mastodon.social/@jerryjhird" target="_blank" >@jerryjhird:mastodon.social</a></li>
-      <li>GitHub: <a href="https://github.com/jerryjhird" target="_blank" >github.com/jerryjhird</a></li>
-      <li>GitHub(but better): <a href="https://codeberg.org/jerryjhird" target="_blank" >git.disroot.org/jerryjhird</a></li>
-      <li>Steam: <a href="https://steamcommunity.com/id/Jerryslang/" target="_blank" >@Jerryslang</a></li>
+      <li>Mastodon: <a href="https://mastodon.social/@jerryjhird" target="_blank" >@jerryjhird@mastodon.social</a></li>
+      <li>Codeberg: <a href="https://codeberg.org/jerryjhird" target="_blank" >codeberg.org/jerryjhird</a></li>
+      <li>Codeberg Mirror: <a href="https://github.com/jerryjhird" target="_blank" >github.com/jerryjhird</a></li>
     </ul>
+
+  <li>trying to verify a signed message? <a href="verify.html">/verify.html</a></li>  
   </section>
+
 </body>
 
-<div class="uwuface-bg"></div>
-<div id="basket" class="basket">🗑️</div>
-<div id="counter" class="counter">0</div>
-
-<script>
-window.onload = () => {
-  const container = document.querySelector(".uwuface-bg");
-
-  function spawnuwuface() {
-    const el = document.createElement("div");
-    el.className = "uwuface-face";
-    el.textContent = Math.random() < 0.5 ? ":3" : "uwu";
-
-    el.style.left = Math.random() * 100 + "vw";
-    el.style.fontSize = 1.5 + Math.random() * 2 + "rem";
-    el.style.animationDuration = 6 + Math.random() * 6 + "s";
-    el.style.setProperty("--rot", `${Math.random() * 40 - 20}deg`);
-
-    container.appendChild(el);
-
-    setTimeout(() => el.remove(), 15000);
-  }
-
-  setInterval(spawnuwuface, 400);
-
-  const basket = document.getElementById("basket");
-  document.addEventListener("mousemove", (e) => {
-    const mouseX = e.clientX;
-    basket.style.left = mouseX - basket.offsetWidth / 2 + "px";
-  });
-
-  const counterEl = document.getElementById("counter");
-  let weebbux = parseInt(localStorage.getItem("weebbux")) || 0;
-  counterEl.textContent = weebbux;
-  const weebbuxObj = { value: weebbux }; // for pass-by-reference
-
-  async function showCatgirl() {
-    try {
-      const response = await fetch(
-        "https://api.nekosia.cat/api/v1/images/catgirl?count=1&session=ip"
-      );
-      const data = await response.json();
-      if (data.success && data.count > 0) {
-        const imageUrl = data.image.original.url;
-
-        const img = document.createElement("img");
-        img.src = imageUrl;
-        img.style.position = "fixed";
-        img.style.top = "50%";
-        img.style.left = "50%";
-        img.style.transform = "translate(-50%, -50%)";
-        img.style.maxWidth = "40vw";
-        img.style.maxHeight = "80vh";
-        img.style.borderRadius = "1rem";
-        img.style.boxShadow = "0 0 20px #ff69b4";
-        img.style.zIndex = "2000";
-        img.style.cursor = "pointer";
-        img.alt = "Catgirl UwU";
-
-        img.addEventListener("click", () => img.remove());
-        document.body.appendChild(img);
-      }
-    } catch (e) {
-      console.error("Failed to fetch catgirl image:", e);
-    }
-  }
-
-  function checkCollision() {
-    const faces = document.querySelectorAll(".uwuface-face");
-    faces.forEach(face => {
-      const faceRect = face.getBoundingClientRect();
-      const basketRect = basket.getBoundingClientRect();
-
-      if (
-        faceRect.bottom >= basketRect.top &&
-        faceRect.left < basketRect.right &&
-        faceRect.right > basketRect.left
-      ) {
-        weebbuxObj.value += 1;
-        localStorage.setItem("weebbux", weebbuxObj.value);
-        counterEl.textContent = weebbuxObj.value;
-        face.remove();
-
-        // show catgirl every 100 weebbux
-        if (weebbuxObj.value % 100 === 0) {
-          showCatgirl();
-        }
-      }
-    });
-  }
-
-  setInterval(checkCollision, 50);
-};
-</script>
-
+<div class="fallobj-bg"></div>
 </html>

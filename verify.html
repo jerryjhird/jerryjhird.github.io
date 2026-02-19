@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Ed25519 Verifier</title>
+
+<script src="https://cdn.jsdelivr.net/npm/tweetnacl@1.0.3/nacl.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/tweetnacl-util@0.15.1/nacl-util.min.js"></script>
+
+</head>
+<body>
+
+<h1>Ed25519 Verifier</h1>
+
+<textarea id="content" placeholder="Paste your message here"></textarea>
+<textarea id="signature" placeholder="paste signature (without block guard)"></textarea>
+
+<div id="result"></div>
+
+<script>
+const PUBKEY_B64 = "Kr6fw9M9jgGmLFPmYlnX6tPjeZVPa8maZC1DPGGqPqI=";
+
+function verifySignature() {
+    const content = document.getElementById('content').value;
+    const sigB64 = document.getElementById('signature').value;
+
+    if (!content || !sigB64) {
+        document.getElementById('result').textContent = "";
+        return;
+    }
+
+    try {
+        const message = nacl.util.decodeUTF8(content);
+        const signature = nacl.util.decodeBase64(sigB64);
+        const pubkey = nacl.util.decodeBase64(PUBKEY_B64);
+
+        const valid = nacl.sign.detached.verify(message, signature, pubkey);
+
+        document.getElementById('result').textContent = valid
+            ? "Signature is valid!"
+            : "Signature is invalid!";
+    } catch (e) {
+        document.getElementById('result').textContent = "Error: " + e.message;
+    }
+}
+
+document.getElementById('content').addEventListener('input', verifySignature);
+document.getElementById('signature').addEventListener('input', verifySignature);
+
+window.addEventListener('DOMContentLoaded', verifySignature);
+</script>
+
+</body>
+</html>
