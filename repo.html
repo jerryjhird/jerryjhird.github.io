@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script>
+    const repo = new URLSearchParams(window.location.search).get("repo");
+
+    if (!repo) {
+      document.write("Missing ?repo= parameter");
+    } else {
+      const codebergURL = "https://codeberg.org/jerryjhird/" + repo;
+      const githubURL    = "https://github.com/jerryjhird/" + repo;
+
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 2000); // 2s timeout
+
+      fetch(codebergURL, { method: "HEAD", mode: "no-cors", signal: controller.signal })
+        .then(() => {
+          clearTimeout(timeout);
+          window.location.replace(codebergURL);
+        })
+        .catch(() => {
+          window.location.replace(githubURL);
+        });
+    }
+  </script>
+</head>
+<body>
+Redirecting...
+</body>
+</html>

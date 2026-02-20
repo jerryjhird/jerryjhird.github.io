@@ -123,3 +123,20 @@ body::before {
         transform: translate(var(--dx, 0), 110vh) rotate(var(--rot));
     }
 }
+
+#theme-dropdown li {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+#theme-dropdown li:hover {
+  background: #a0d8ff;
+}
+
+#theme-dropdown {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 50;
+}

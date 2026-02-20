@@ -2,11 +2,11 @@ document.addEventListener("DOMContentLoaded", () => {
     const head = document.head;
 
     function loadCSS(href) {
-        const link = document.createElement('link');
-        link.rel = 'stylesheet';
+        const link = document.createElement("link");
+        link.rel = "stylesheet";
         link.href = href;
         head.appendChild(link);
-        console.log("[stylesheet] dynamicly loaded:", href);
+        console.log("[stylesheet] dynamically loaded:", href);
     }
 
     function loadJS(src) {
@@ -14,68 +14,104 @@ document.addEventListener("DOMContentLoaded", () => {
         script.src = src;
         script.defer = true;
         document.body.appendChild(script);
-        console.log("[script] dynamicly loaded:", src);
+        console.log("[script] dynamically loaded:", src);
+    }
+
+    const THEMES = {
+        Default: {
+            css: "styles/theme-Default.css",
+            js: ""
+        },
+        Valentines: {
+            css: "styles/theme-Valentines.css",
+            js: "scripts/theme-Valentines.js"
+        },
+        Christmas: {
+            css: "styles/theme-Christmas.css",
+            js: "scripts/theme-Christmas.js"
+        }
+    };
+
+    function updateThemeLabel(name) {
+        const themeNameEl = document.getElementById("theme-name");
+        if (themeNameEl) themeNameEl.textContent = name;
+    }
+
+    window.LoadTheme = function(name, options = {}) {
+        const { noJS = false } = options;
+
+        const theme = THEMES[name];
+        if (!theme) {
+            console.warn("Invalid theme:", name);
+            return false;
+        }
+
+        loadCSS(theme.css);
+
+        if (!noJS && theme.js) {
+            loadJS("scripts/shared-code.js");
+            loadJS(theme.js);
+        }
+
+        window.currentTheme = name;
+        updateThemeLabel(name);
+        return true;
+    };
+
+    function switchTheme(name) {
+        const url = new URL(window.location.href);
+        url.searchParams.set("theme", name);
+        window.location.href = url.toString();
     }
 
     const urlParams = new URLSearchParams(window.location.search);
-    const forceStyle = urlParams.get('forcestyle');
-    const forceJS = urlParams.get('forcejs');
-    const noJS = urlParams.has('nojs');
+    const rawThemeParam = urlParams.get("theme")?.trim(); // remove whitespace
+    const noJS = urlParams.has("nojs");
 
-    let themeName = '';
-    let seasonalCSS = '';
-    let seasonalJS = '';
+    if (rawThemeParam) { // normalize first char uppercase rest lowercase
+        const normalized = rawThemeParam.charAt(0).toUpperCase() + rawThemeParam.slice(1).toLowerCase();
+        const success = LoadTheme(normalized, { noJS });
 
-    if (forceStyle) {
-        loadCSS(forceStyle);
-        if (forceJS) {
-            loadJS('styles/shared-code.js');
-            loadJS(forceJS)
+        if (!success) { // fallback to Default
+            LoadTheme("Default", { noJS });
         }
-        themeName = forceStyle
-            .split('/')
-            .pop()
-            .replace('.css', '')
-            .replace(/^theme-/, ''); // remove "theme-" prefix
-    } else {
+    } else { // seasonal fallback
         const month = new Date().getMonth() + 1;
-        let seasonalCSS = '';
 
-        switch(month) {
-            case 2:
-                seasonalCSS = 'styles/theme-Valentines.css';
-                seasonalJS = 'styles/theme-Valentines.js';
-                themeName = 'Valentines';
-                break;
-
-            // case 10: // halloween is planned
-
-            case 12:
-                seasonalCSS = 'styles/theme-Christmas.css';
-                seasonalJS = '';
-                themeName = 'Christmas';
-                break;
-
-            default:
-                seasonalCSS = 'styles/theme-Default.css';
-                seasonalJS = '';
-                themeName = 'Default';
-        }
-
-        loadCSS(seasonalCSS);
-        if (!noJS && seasonalJS) {
-            loadJS('styles/shared-code.js');
-            loadJS(seasonalJS);
+        if (month === 2) {
+            LoadTheme("Valentines", { noJS });
+        } else if (month === 12) {
+            LoadTheme("Christmas", { noJS });
+        } else {
+            LoadTheme("Default", { noJS });
         }
     }
 
-    const header = document.querySelector("header");
-    if (header) {
-        const themeEl = document.createElement("p");
-        themeEl.className = "text-gray-400 text-lg";
-        themeEl.textContent = `theme: ${themeName}`;
-        header.appendChild(themeEl);
-    }
+    const themeNameEl = document.getElementById("theme-name");
+    const themeDropdown = document.getElementById("theme-dropdown");
 
-    window.currentTheme = themeName;
+    Object.keys(THEMES).forEach(theme => {
+        const li = document.createElement("li");
+        li.textContent = theme;
+        li.addEventListener("click", () => {
+            switchTheme(theme);
+        });
+        themeDropdown.appendChild(li);
+    });
+
+    themeNameEl.addEventListener("click", (e) => {
+        e.stopPropagation();
+        themeDropdown.classList.toggle("hidden");
+
+        if (!themeDropdown.classList.contains("hidden")) {
+            themeDropdown.style.position = "fixed";
+            themeDropdown.style.top = `${e.clientY}px`;
+            themeDropdown.style.left = `${e.clientX}px`;
+            themeDropdown.style.zIndex = 1000;
+        }
+    });
+    document.addEventListener("click", () => {
+        themeDropdown.classList.add("hidden");
+    });
+
 });

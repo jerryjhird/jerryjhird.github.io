@@ -54,14 +54,31 @@ ul li {
   z-index: 1;
   background: linear-gradient(
     135deg,
-    rgba(255, 77, 109, 0.15),
-    rgba(194, 24, 91, 0.15)
+    rgba(255, 77, 109, 0.15), /* matches header pink-red */
+    rgba(204, 18, 52, 0.15)   /* darker, like background accents */
   );
 }
 
+ul li:hover {
+  @apply scale-105;
+}
+
+ul li a {
+  @apply inline-block mt-1 underline font-semibold;
+  color: #ff4d6d; /* header pink-red for consistency */
+  text-shadow: 0 0 4px #ff4d6d, 0 0 8px #ff80ab, 0 0 12px #cc0033; /* glowy but readable */
+  transition: all 0.3s ease-in-out;
+}
+
+ul li a:hover {
+  color: #ff80ab; /* lighter pink glow on hover */
+  text-shadow: 0 0 6px #ff80ab, 0 0 12px #ffffff, 0 0 18px #cc0033;
+  @apply animate-pulse;
+}
+
 @keyframes textGlow {
-  0% { text-shadow: 0 0 4px #ff4d6d, 0 0 8px #ff1744, 0 0 16px #c2185b; }
-  100% { text-shadow: 0 0 6px #ff4d6d, 0 0 14px #ff1744, 0 0 24px #c2185b; }
+  0% { text-shadow: 0 0 3px #ff80ab, 0 0 6px #ffffff, 0 0 12px #cc0033; }
+  100% { text-shadow: 0 0 5px #ff4d6d, 0 0 10px #ffffff, 0 0 20px #cc0033; }
 }
 
 body::before {
@@ -110,4 +127,21 @@ body::before {
   to {
     transform: translateY(110vh) rotate(var(--rot));
   }
+}
+
+#theme-dropdown li {
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+#theme-dropdown li:hover {
+  background: #ff4d6d;
+}
+
+#theme-dropdown {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  z-index: 50;
 }
