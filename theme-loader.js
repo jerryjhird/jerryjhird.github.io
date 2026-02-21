@@ -26,6 +26,10 @@ document.addEventListener("DOMContentLoaded", () => {
             css: "styles/theme-Valentines.css",
             js: "scripts/theme-Valentines.js"
         },
+        Halloween: {
+            css: "styles/theme-Halloween.css",
+            js: "scripts/theme-Halloween.js"
+        },
         Christmas: {
             css: "styles/theme-Christmas.css",
             js: "scripts/theme-Christmas.js"
@@ -80,6 +84,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (month === 2) {
             LoadTheme("Valentines", { noJS });
+        } else if (month === 10) {
+            LoadTheme("Halloween", { noJS});
         } else if (month === 12) {
             LoadTheme("Christmas", { noJS });
         } else {
