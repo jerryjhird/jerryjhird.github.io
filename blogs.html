@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jerry's Blog</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="scripts/main.js"></script>
+    <script>
+        const flag = localStorage.getItem("mdtml.experimental.SyntaxHighlighting");
+        if (flag === "true") {
+            loadJS("https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js")
+            loadCSS("https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css")
+        }
+    </script>
+    <style>
+        #markdown-container ul,
+        #markdown-container ol,
+        #markdown-container li {
+            background: transparent !important;
+        }
+
+        #markdown-container li::marker {
+            color: white !important;
+        }
+        #markdown-container {
+          position: relative;
+          z-index: 10; /* put text, codeblocks etc above pokadot effect found in themes */
+        }
+    </style>
+</head>
+<body class="bg-gray-800 min-h-screen flex justify-center px-16 py-12">
+  <div class="w-full max-w-5xl flex">
+    <div class="flex-1 bg-gradient-to-r from-purple-700 via-pink-600 to-indigo-500 p-1 rounded-xl shadow-xl">
+      <div class="bg-gray-900 text-white rounded-lg p-8 prose prose-invert shadow-inner min-h-full">
+        <div id="markdown-container" class="min-h-full"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="scripts/mdtml.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const blogFile = params.get('blog');
+
+    if (blogFile) {
+      fetch(`docs/${blogFile}.md`)
+        .then(res => {
+          if (!res.ok) throw new Error("Markdown not found :(");
+          return res.text();
+        })
+        .then(md => renderMarkdown(md))
+        .catch(err => {
+          document.getElementById('markdown-container').innerHTML =
+            `<p>Error loading blog: ${err.message}</p>`;
+        });
+    } else {
+      document.getElementById('markdown-container').innerHTML =
+        "<p>No blog specified!</p>";
+    }
+    EnableSyntaxHighlighting();
+  </script>
+  <div id="settings-c"></div>
+</body>
+<div class="fallobj-bg"></div>
+</html>
